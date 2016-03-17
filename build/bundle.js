@@ -11049,7 +11049,7 @@ function init(err, response) {
 
   var yScale = _d2.default.scale.linear().domain(_d2.default.extent(data, racePositions)).range([0, height]);
 
-  var xScale = _d2.default.scale.ordinal().domain(data.map(raceSeconds)).rangePoints([width, 0]);
+  var xScale = _d2.default.scale.ordinal().domain(data.map(raceTime)).rangePoints([width, 0]);
 
   var _yAxis = _d2.default.svg.axis().scale(yScale).orient('left').ticks(10);
 
@@ -11059,7 +11059,7 @@ function init(err, response) {
 
   var yAxis = svg.append('g').attr('class', 'axis').attr('transform', 'translate(60,80)').call(_yAxis).append('text').text('Ranking').attr('transform', 'rotate(-90)').attr('x', -50).attr('y', -20);
 
-  var xAxis = svg.append('g').attr('class', 'axis').attr('transform', "translate(60" + "," + (height + margin.top) + ")").call(_xAxis).append('text').text('Finish Time in Seconds').attr('x', width / 2).attr('y', margin.bottom);
+  var xAxis = svg.append('g').attr('class', 'axis').attr('transform', "translate(60" + "," + (height + margin.top) + ")").call(_xAxis).append('text').text('Finish Time').attr('x', width / 2).attr('y', margin.bottom - 10);
 
   var scatter = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
@@ -11103,12 +11103,8 @@ function init(err, response) {
     return d.Place;
   }
 
-  function raceSeconds(d) {
-    return d.Seconds;
-  }
-
   function _xScale(d) {
-    return xScale(d.Seconds);
+    return xScale(d.Time);
   }
 
   function _yScale(d) {

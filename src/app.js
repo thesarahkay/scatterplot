@@ -21,7 +21,7 @@ function init(err, response) {
     .range([0, height]);
 
   let xScale = d3.scale.ordinal() 
-    .domain(data.map(raceSeconds))
+    .domain(data.map(raceTime))
     .rangePoints([width, 0]);
 
   let _yAxis = d3.svg.axis()
@@ -54,9 +54,9 @@ function init(err, response) {
     .attr('transform', "translate(60" + "," +  (height + margin.top) + ")")
     .call(_xAxis)
     .append('text')
-    .text('Finish Time in Seconds')
+    .text('Finish Time')
     .attr('x', width / 2)
-    .attr('y', (margin.bottom));
+    .attr('y', (margin.bottom - 10));
 
   let scatter = svg.append('g')
     .attr('transform', "translate(" + margin.left + "," + margin.top + ")");
@@ -146,12 +146,8 @@ function init(err, response) {
     return d.Place;
   }
 
-  function raceSeconds(d) {
-    return d.Seconds;
-  }
-
   function _xScale(d) {
-    return xScale(d.Seconds);
+    return xScale(d.Time);
   }
 
   function _yScale(d) {

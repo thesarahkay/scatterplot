@@ -7,11 +7,11 @@ const margin = {
   top: 80,
   left: 60,
   right: 100,
-  bottom: 25
+  bottom: 50
 };
 const width = 800 - margin.left - margin.right;
 const height = 600 - margin.top - margin.bottom;
-const r = 5
+const r = 5;
 
 function init(err, response) {
   let data = JSON.parse(response.text);
@@ -24,10 +24,39 @@ function init(err, response) {
     .domain(data.map(raceSeconds))
     .rangePoints([width, 0]);
 
+  let _yAxis = d3.svg.axis()
+    .scale(yScale)
+    .orient('left')
+    .ticks(10);
+
+  let _xAxis = d3.svg.axis()
+    .scale(xScale)
+    .tickValues(xScale.domain().filter(getRaceTime))
+    .orient('bottom');
+
   let svg = d3.select('#root').append('svg')
     .attr('height', height + margin.top + margin.bottom)
     .attr('width', width + margin.right + margin.left)
     .attr('background-color', 'white');
+
+  let yAxis = svg.append('g')
+    .attr('class', 'axis')
+    .attr('transform', 'translate(60,80)')
+    .call(_yAxis)
+    .append('text')
+    .text('Ranking')
+    .attr('transform', 'rotate(-90)')
+    .attr('x', -50)
+    .attr('y', -20);
+
+  let xAxis = svg.append('g')
+    .attr('class', 'axis')
+    .attr('transform', "translate(60" + "," +  (height + margin.top) + ")")
+    .call(_xAxis)
+    .append('text')
+    .text('Finish Time in Seconds')
+    .attr('x', width / 2)
+    .attr('y', (margin.bottom));
 
   let scatter = svg.append('g')
     .attr('transform', "translate(" + margin.left + "," + margin.top + ")");
@@ -75,6 +104,7 @@ function init(err, response) {
     .attr('class', 'tooltip')
     .style('opacity', 0)
     .style('top', margin.top + "px")
+    .style('left', margin.left + "px")
     .style('width', (height / 3) + "px");
 
 
@@ -133,7 +163,7 @@ function init(err, response) {
   }
 
   function _text(d) {
-    return d.Name
+    return d.Name;
   }
 }
 

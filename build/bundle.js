@@ -11038,7 +11038,7 @@ var margin = {
   top: 80,
   left: 60,
   right: 100,
-  bottom: 25
+  bottom: 50
 };
 var width = 800 - margin.left - margin.right;
 var height = 600 - margin.top - margin.bottom;
@@ -11051,7 +11051,15 @@ function init(err, response) {
 
   var xScale = _d2.default.scale.ordinal().domain(data.map(raceSeconds)).rangePoints([width, 0]);
 
+  var _yAxis = _d2.default.svg.axis().scale(yScale).orient('left').ticks(10);
+
+  var _xAxis = _d2.default.svg.axis().scale(xScale).tickValues(xScale.domain().filter(getRaceTime)).orient('bottom');
+
   var svg = _d2.default.select('#root').append('svg').attr('height', height + margin.top + margin.bottom).attr('width', width + margin.right + margin.left).attr('background-color', 'white');
+
+  var yAxis = svg.append('g').attr('class', 'axis').attr('transform', 'translate(60,80)').call(_yAxis).append('text').text('Ranking').attr('transform', 'rotate(-90)').attr('x', -50).attr('y', -20);
+
+  var xAxis = svg.append('g').attr('class', 'axis').attr('transform', "translate(60" + "," + (height + margin.top) + ")").call(_xAxis).append('text').text('Finish Time in Seconds').attr('x', width / 2).attr('y', margin.bottom);
 
   var scatter = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
@@ -11065,7 +11073,7 @@ function init(err, response) {
 
   var legendText = legend.selectAll('.legend text').data(legendData).enter().append('text').attr('transform', 'translate(15,4)').attr('y', legendY).text(_text);
 
-  var toolTip = _d2.default.select('#root').append('div').attr('class', 'tooltip').style('opacity', 0).style('top', margin.top + "px").style('width', height / 3 + "px");
+  var toolTip = _d2.default.select('#root').append('div').attr('class', 'tooltip').style('opacity', 0).style('top', margin.top + "px").style('left', margin.left + "px").style('width', height / 3 + "px");
 
   function show(d) {
     var html = d.Name + ": " + d.Nationality + "</br>" + d.Year + ", " + d.Time + "</br>" + "</br>" + d.Doping;

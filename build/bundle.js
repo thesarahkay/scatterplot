@@ -11061,9 +11061,13 @@ function init(err, response) {
 
   var xAxis = svg.append('g').attr('class', 'axis').attr('transform', "translate(60" + "," + (height + margin.top) + ")").call(_xAxis).append('text').text('Finish Time').attr('x', width / 2).attr('y', margin.bottom - 10);
 
+  var valueLine = _d2.default.svg.line().x(_xScale).y(_yScale);
+
   var scatter = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
   var circles = scatter.selectAll('circle').data(data).enter().append('circle').on('mouseover', show).on('mouseout', hide).attr('fill', _fill).attr('cx', _xScale).attr('cy', _yScale).attr('r', r);
+
+  var path = scatter.append('path').attr('class', 'line').attr('d', valueLine(data));
 
   var labels = scatter.selectAll('text').data(data).enter().append('text').attr('x', _xScale).attr('y', _yScale).attr('transform', 'translate(15,4)').text(_text);
 

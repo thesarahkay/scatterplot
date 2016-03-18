@@ -1,8 +1,15 @@
 #root {
   position: relative;
+  background-color: lightgrey;
   margin: 0 auto;
+  font-family: Arial;
   width: 800px;
   height: 600px;
+}
+
+#root h3 {
+  position: absolute;
+  left: 30%;
 }
 
 circle {
@@ -29,10 +36,17 @@ text, .tooltip {
   padding: 10px;
 }
 
+path {
+  stroke: grey;
+  stroke-width: 1;
+  fill: none;
+}
+
 .axis path,
 .axis line {
   fill: none;
-  stroke: black;
+  stroke: grey;
+  stroke-width: 1;
   shape-rendering: crispEdges;
 }
 

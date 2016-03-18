@@ -58,6 +58,10 @@ function init(err, response) {
     .attr('x', width / 2)
     .attr('y', (margin.bottom - 10));
 
+  let valueLine = d3.svg.line()
+    .x(_xScale)
+    .y(_yScale);
+
   let scatter = svg.append('g')
     .attr('transform', "translate(" + margin.left + "," + margin.top + ")");
 
@@ -71,6 +75,10 @@ function init(err, response) {
     .attr('cx', _xScale)
     .attr('cy', _yScale)
     .attr('r', r);
+
+  let path = scatter.append('path')
+    .attr('class', 'line')
+    .attr('d', valueLine(data));
 
   let labels = scatter.selectAll('text')
     .data(data)
